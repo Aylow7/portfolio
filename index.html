@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Vyral, Software Engineer & Développeur d'applications. Spécialisé en bots Discord et sites web.">
+    <title>Vyral | Software Engineer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --bg-color: #09090b; /* Noir profond */
+            --surface-color: #121215; /* Gris très sombre pour les cartes */
+            --border-color: #27272a; /* Bordures subtiles */
+            --primary-color: #ffffff;
+            --secondary-color: #a1a1aa;
+            --accent-color: #6366f1; /* Indigo vibrant type CreatorsArea */
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --font-main: 'Inter', sans-serif;
+            --max-width: 1100px;
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; }
+
+        /* --- LAYOUT UTILS --- */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        /* Background Glow Effect */
+        #hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-color);
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        h1 span {
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-color);
+            color: var(--bg-color);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- ABOUT & CARDS --- */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 16px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            line-height: 1.8;
+        }
+
+        .about-text strong {
+            color: var(--primary-color);
+        }
+
+        /* --- CARDS STYLE (Common) --- */
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 40px -10px var(--accent-glow);
+        }
+
+        .card-icon {
+            margin-bottom: 16px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            color: var(--primary-color);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .card-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            background: var(--border-color);
+        }
+
+        /* --- SKILLS GRID --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .skill-item:hover {
+            border-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 60px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .legal-nav {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legal-nav a {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            cursor: pointer;
+        }
+
+        .legal-nav a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #52525b;
+        }
+
+        /* --- LEGAL PAGES STYLE --- */
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 1.5;
+        }
+        
+        .legal-content {
+            background: var(--surface-color);
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+        
+        .legal-content h2 { 
+            margin-bottom: 10px; 
+            font-size: 1.8rem;
+        }
+        
+        .legal-content .last-update {
+            color: var(--secondary-color);
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .legal-content h3 {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .legal-content p { 
+            color: var(--secondary-color); 
+            margin-bottom: 10px; 
+        }
+
+        .legal-content ul {
+            list-style: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Mobile menu simplified */
+            .legal-content { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Vyral.</div>
+                <div class="nav-links">
+                    <a onclick="showHome()">Accueil</a>
+                    <a href="#about" onclick="handleNavClick(event, 'about')">À propos</a>
+                    <a href="#projects" onclick="handleNavClick(event, 'projects')">Projets</a>
+                    <a href="#contact" onclick="handleNavClick(event, 'contact')">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-view">
+        
+        <section id="hero" class="container">
+            <span class="badge">Disponible pour freelance</span>
+            <h1>Software Engineer & <br><span>Application Developer</span></h1>
+            <p class="hero-desc">
+                Je transforme vos idées en code propre et performant. Spécialisé dans le développement web moderne et l'automatisation Discord.
+            </p>
+            <a href="#projects" class="btn">
+                Voir mes projets
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+        </section>
+
+        <section id="about" class="container section-padding">
+            <h2 class="section-title">À propos</h2>
+            <div class="about-grid">
+                <div class="card about-text">
+                    <p>
+                        Je suis <strong>Vyral</strong>, un développeur passionné par l'ingénierie logicielle.
+                        <br><br>
+                        Mon aventure a commencé à l'âge de <strong>10 ans</strong>. Un an plus tard, je mettais en ligne mon premier site web et développais mon premier bot Discord. Depuis, je n'ai jamais arrêté d'apprendre.
+                        <br><br>
+                        Aujourd'hui, je me considère comme un développeur intermédiaire/expérimenté, capable de concevoir des architectures complètes, du backend au frontend.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container section-padding">
+            <h2 class="section-title">Projets Récents</h2>
+            <div class="about-grid">
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    </div>
+                    <h3>Discord Factory</h3>
+                    <p>Une plateforme complète permettant de créer et configurer ton bot Discord gratuitement. Boostez votre serveur avec des fonctionnalités avancées.</p>
+                    <div class="card-links">
+                        <a href="https://discordfactory.eu/" target="_blank" class="btn-outline">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            Site Web
+                        </a>
+                        <a href="https://discord.gg/factorydev" target="_blank" class="btn-outline">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            Discord
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="skills" class="container section-padding">
+            <h2 class="section-title">Stack Technique</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    HTML / CSS
+                </div>
+                <div class="skill-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    JavaScript
+                </div>
+                <div class="skill-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    React / JSX
+                </div>
+                <div class="skill-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Vite / Next.js
+                </div>
+                <div class="skill-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    MySQL
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container section-padding" style="text-align: center;">
+            <div class="card" style="max-width: 600px; margin: 0 auto; align-items: center; text-align: center;">
+                <h3>Travaillons ensemble</h3>
+                <p>Vous avez un projet de bot Discord ou de site web ? Je suis ouvert aux collaborations.</p>
+                <a href="mailto:contact@vyral-studio.com" class="btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    Me contacter
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="legal-view" class="container section-padding hidden">
+        <button class="btn-outline" onclick="showHome()" style="margin-bottom: 20px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Retour
+        </button>
+        
+        <div id="legal-cgu" class="legal-content hidden">
+            <h2>Conditions Générales d’Utilisation (CGU)</h2>
+            <p class="last-update">Dernière mise à jour : 2026</p>
+            
+            <h3>1. Présentation</h3>
+            <p>Le présent site est édité par Vyral Development Studio (VDS), ci-après désigné « l’Éditeur ».</p>
+            <p>Le site a pour objectif de présenter les projets, compétences et services proposés par Vyral dans le domaine du développement informatique. L’accès au site implique l’acceptation pleine et entière des présentes Conditions Générales d’Utilisation.</p>
+
+            <h3>2. Accès au site</h3>
+            <p>Le site est accessible gratuitement à tout utilisateur disposant d’un accès à Internet. L’Éditeur s’efforce d’assurer un accès continu au site, mais ne saurait être tenu responsable d’une interruption, d’un bug ou d’une indisponibilité temporaire.</p>
+
+            <h3>3. Utilisation du site</h3>
+            <p>L’utilisateur s’engage à utiliser le site :</p>
+            <ul>
+                <li>de manière légale et respectueuse,</li>
+                <li>sans tenter de nuire à son fonctionnement,</li>
+                <li>sans copier, exploiter ou détourner le contenu sans autorisation.</li>
+            </ul>
+            <p>Toute utilisation abusive pourra entraîner des mesures appropriées.</p>
+
+            <h3>4. Propriété intellectuelle</h3>
+            <p>L’ensemble du contenu présent sur le site (textes, projets, design, logos, code, etc.) est la propriété exclusive de Vyral Development Studio, sauf mention contraire. Toute reproduction, modification ou diffusion sans autorisation préalable est interdite.</p>
+
+            <h3>5. Responsabilité</h3>
+            <p>Les informations fournies sur le site sont données à titre informatif. L’Éditeur ne garantit pas l’exactitude ou l’actualité permanente des contenus et ne saurait être tenu responsable d’un usage qui en serait fait.</p>
+
+            <h3>6. Modification des CGU</h3>
+            <p>L’Éditeur se réserve le droit de modifier les présentes CGU à tout moment. Les utilisateurs sont invités à les consulter régulièrement.</p>
+        </div>
+
+        <div id="legal-tos" class="legal-content hidden">
+            <h2>Terms of Service (TOS)</h2>
+            <p class="last-update">Last update: 2026</p>
+
+            <h3>1. Scope</h3>
+            <p>These Terms of Service govern the use of the website operated by Vyral Development Studio (VDS). By accessing or using this website, you agree to be bound by these terms.</p>
+
+            <h3>2. Services</h3>
+            <p>The website presents development-related projects and services, including but not limited to:</p>
+            <ul>
+                <li>Discord bots</li>
+                <li>Web development projects</li>
+            </ul>
+            <p>No contractual obligation is formed unless explicitly stated otherwise.</p>
+
+            <h3>3. User Responsibilities</h3>
+            <p>Users agree not to:</p>
+            <ul>
+                <li>misuse the website,</li>
+                <li>attempt to access restricted areas,</li>
+                <li>copy or reuse content without permission.</li>
+            </ul>
+
+            <h3>4. Intellectual Property</h3>
+            <p>All content remains the exclusive property of Vyral Development Studio, unless otherwise specified.</p>
+
+            <h3>5. Limitation of Liability</h3>
+            <p>The services and information are provided “as is”. VDS shall not be held liable for damages resulting from the use or inability to use the website.</p>
+
+            <h3>6. Changes</h3>
+            <p>VDS reserves the right to modify these Terms at any time.</p>
+        </div>
+
+        <div id="legal-privacy" class="legal-content hidden">
+            <h2>Politique de Confidentialité</h2>
+            <p class="last-update">Dernière mise à jour : 2026</p>
+
+            <h3>1. Données collectées</h3>
+            <p>Le site ne collecte aucune donnée personnelle automatiquement. Des données peuvent être collectées uniquement si l’utilisateur les fournit volontairement (ex : formulaire de contact, prise de contact par email).</p>
+
+            <h3>2. Utilisation des données</h3>
+            <p>Les données éventuellement collectées sont utilisées uniquement pour :</p>
+            <ul>
+                <li>répondre à une demande de contact,</li>
+                <li>communiquer avec l’utilisateur.</li>
+            </ul>
+            <p>Elles ne sont ni vendues, ni partagées avec des tiers.</p>
+
+            <h3>3. Cookies</h3>
+            <p>Le site peut utiliser des cookies strictement nécessaires à son bon fonctionnement ou à des statistiques anonymes. L’utilisateur peut configurer son navigateur pour refuser les cookies.</p>
+
+            <h3>4. Sécurité</h3>
+            <p>L’Éditeur s’engage à protéger les données personnelles et à mettre en œuvre des mesures raisonnables pour éviter tout accès non autorisé.</p>
+
+            <h3>5. Droits des utilisateurs</h3>
+            <p>Conformément à la réglementation en vigueur, l’utilisateur peut demander :</p>
+            <ul>
+                <li>l’accès à ses données,</li>
+                <li>leur modification,</li>
+                <li>leur suppression.</li>
+            </ul>
+            <p>Toute demande peut être faite via les moyens de contact disponibles sur le site.</p>
+
+            <h3>6. Modifications</h3>
+            <p>Cette politique peut être modifiée à tout moment afin de rester conforme à la législation.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <span class="footer-logo">Vyral.</span>
+            <div class="legal-nav">
+                <a onclick="showLegal('legal-cgu')">CGU</a>
+                <a onclick="showLegal('legal-tos')">TOS</a>
+                <a onclick="showLegal('legal-privacy')">Confidentialité</a>
+            </div>
+            <p class="copyright">
+                © 2026 Vyral Development Studio (VDS). Tous droits réservés.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // SPA Logic for Legal Pages
+        const mainView = document.getElementById('main-view');
+        const legalView = document.getElementById('legal-view');
+        const legalSections = ['legal-cgu', 'legal-tos', 'legal-privacy'];
+
+        function showHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            legalView.classList.add('hidden');
+            mainView.classList.remove('hidden');
+            mainView.classList.add('fade-in');
+        }
+
+        function showLegal(sectionId) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            mainView.classList.add('hidden');
+            legalView.classList.remove('hidden');
+            
+            // Masquer toutes les sections légales puis afficher la bonne
+            legalSections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            
+            const target = document.getElementById(sectionId);
+            target.classList.remove('hidden');
+            target.classList.add('fade-in');
+        }
+
+        function handleNavClick(event, targetId) {
+            // Si on est dans la vue légale, on doit d'abord revenir à l'accueil
+            if (!mainView.classList.contains('hidden')) return; // Comportement normal par défaut (ancre)
+
+            event.preventDefault();
+            showHome();
+            
+            // Petit délai pour laisser le DOM se mettre à jour avant de scroll
+            setTimeout(() => {
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        // Smooth Scroll global correction
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Si c'est un lien géré par onclick (header), on laisse faire handleNavClick
+                if (this.getAttribute('onclick')) return;
+
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
